@@ -274,7 +274,9 @@ int mdm_print_speed(modem_config *cfg)
 
   }
   mdm_send_response(get_connect_response(speed, cfg->response_code_level), cfg);
-  mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_CONNECT, cfg);
+  if (cfg->custom_protocol) {
+    mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_CONNECT, cfg);
+  }
   return 0;
 }
 
@@ -318,7 +320,9 @@ int mdm_disconnect(modem_config *cfg)
     mdm_set_control_lines(cfg);
     if (type != MDM_CONN_NONE) {
       mdm_send_response(MDM_RESP_NO_CARRIER, cfg);
-      mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_NO_CARRIER, cfg);
+      if (cfg->custom_protocol) {
+        mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_NO_CARRIER, cfg);
+      }
       usleep(cfg->disconnect_delay * 1000);
     }
     cfg->rings = 0;
@@ -729,7 +733,9 @@ int mdm_send_ring(modem_config *cfg)
   LOG(LOG_DEBUG, "Sending 'RING' to modem");
   cfg->line_ringing = TRUE;
   mdm_send_response(MDM_RESP_RING, cfg);
-  mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_RING, cfg);
+  if (cfg->custom_protocol) {
+    mdm_send_response(MDM_RESP_CUSTOM_PROTOCOL_RING, cfg);
+  }
   cfg->rings++;
   LOG(LOG_ALL, "Sent #%d ring", cfg->rings);
   if (cfg->cmd_mode == FALSE || (cfg->s[0] != 0 && cfg->rings >= cfg->s[0])) {
