@@ -19,5 +19,9 @@ RING | 0xff, 0x01
 CONNECT | 0xff, 0x02
 NO CARRIER | oxff, 0x03
 
+For my retro C64 bbs, I use this tcpser command:
+
+tcpser -v 25232 -p 6400 -i "s0=1" -P -l 7 -tSs
+
 Kevin Umbach <kumbach@gmail.com>
 
