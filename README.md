@@ -11,5 +11,13 @@ can use to detect when a call is answered or disconnected. Vice does not set the
 based on tcpser's connection status. BBS programs will have to be modified to detect the connect
 and disconnect messages coming from tcpser and respond accordingly.
 
+When the -P argument is passed into tcpser, tcpser will send the following to the client for these Hayes modem responses:
+
+MODEM RESPONSE | SENT TO CLIENT
+-------------- | ------------------------
+RING | 0xff, 0x01
+CONNECT | 0xff, 0x02
+NO CARRIER | oxff, 0x03
+
 Kevin Umbach <kumbach@gmail.com>
 
